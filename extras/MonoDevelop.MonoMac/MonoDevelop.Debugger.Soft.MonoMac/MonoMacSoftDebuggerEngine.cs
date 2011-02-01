@@ -51,7 +51,7 @@ namespace MonoDevelop.Debugger.Soft.MonoMac
 			var cmd = (MonoMacExecutionCommand) command;
 			
 			var startInfo = new MonoMacDebuggerStartInfo (cmd);
-			SoftDebuggerEngine.SetUserAssemblyNames (startInfo, cmd.UserAssemblyPaths);
+			startInfo.SetUserAssemblies (cmd.UserAssemblyPaths);
 			return startInfo;
 		}
 

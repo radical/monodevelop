@@ -37,12 +37,11 @@ using System.Net.Sockets;
 using System.Net;
 using System.Text;
 using System.Collections.Generic;
-using Mono.Debugging.Soft;
 
 namespace MonoDevelop.Debugger.Soft.MonoMac
 {
 
-	public class MonoMacDebuggerSession : SoftDebuggerSession
+	public class MonoMacDebuggerSession : RemoteSoftDebuggerSession
 	{
 		MonoMacProcess process;
 		
@@ -50,16 +49,15 @@ namespace MonoDevelop.Debugger.Soft.MonoMac
 		{
 			var dsi = (MonoMacDebuggerStartInfo) startInfo;
 			var cmd = dsi.ExecutionCommand;		
-			
-			int assignedPort;
-			StartListening (dsi, out assignedPort);
+		
+			StartListening (dsi);
 			
 			Action<string> stdout = s => OnTargetOutput (false, s);
 			Action<string> stderr = s => OnTargetOutput (true, s);
 			
 			var asi = new ApplicationStartInfo (cmd.AppPath);
 			asi.Environment ["MONOMAC_DEBUGLAUNCHER_OPTIONS"]
-				= string.Format ("--debug --debugger-agent=transport=dt_socket,address={0}:{1}", dsi.Address, assignedPort);
+				= string.Format ("--debug --debugger-agent=transport=dt_socket,address={0}:{1}", dsi.Address, dsi.DebugPort);
 			
 			process = MonoMacExecutionHandler.OpenApplication (cmd, asi, stdout, stderr);
 			
@@ -75,20 +73,19 @@ namespace MonoDevelop.Debugger.Soft.MonoMac
 				if (process != null && !process.IsCompleted)
 					process.Cancel ();
 			} catch (Exception ex) {
-				MonoDevelop.Core.LoggingService.LogError ("Error force-terminating soft debugger process", ex);
+				LoggingService.LogError ("Error force-terminating soft debugger process", ex);
 			}
 		}
 	}
 	
-	class MonoMacDebuggerStartInfo : RemoteSoftDebuggerStartInfo
+	class MonoMacDebuggerStartInfo : RemoteDebuggerStartInfo
 	{
 		public MonoMacExecutionCommand ExecutionCommand { get; private set; }
 		
 		public MonoMacDebuggerStartInfo (MonoMacExecutionCommand cmd)
-			: base (cmd.AppPath.FileNameWithoutExtension, IPAddress.Loopback, 0)
+			: base (cmd.AppPath.FileNameWithoutExtension, IPAddress.Loopback, 8901)
 		{
 			ExecutionCommand = cmd;
-			Listen = true;
 		}
 	}
 }
