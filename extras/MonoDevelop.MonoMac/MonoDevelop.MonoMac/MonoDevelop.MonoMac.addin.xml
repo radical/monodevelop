@@ -26,6 +26,9 @@
 		<Import file = "MonoMacLaunchScript.sh"/>
 		<Import file = "mono-version-check"/>
 		<Import file = "mmp"/>
+		<Import file = "docs/monomac-docs.source"/>
+		<Import file = "docs/monomac-lib.tree"/>
+		<Import file = "docs/monomac-lib.zip"/>
 	</Runtime>
 	
 	<Dependencies>
@@ -108,6 +111,10 @@
 	<Extension path = "/MonoDevelop/Ide/MainMenu/Project">
 			<CommandItem id = "MonoDevelop.MonoMac.MonoMacCommands.CreateMacInstaller"
 			             insertafter = "MonoDevelop.Ide.Commands.ProjectCommands.ExportProject" />
+	</Extension>
+
+	<Extension path = "/MonoDevelop/ProjectModel/MonoDocSources">
+		<Source directory="docs" relative="true" />
 	</Extension>
 
 	<!-- debugger addin -->
