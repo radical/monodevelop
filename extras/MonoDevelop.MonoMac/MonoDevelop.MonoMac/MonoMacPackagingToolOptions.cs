@@ -89,8 +89,9 @@ namespace MonoDevelop.MonoMac
 				}},
 				{ "l|linker-mode=", LinkerModeOptionHelpText, v => {
 					MonoMacLinkerMode mode;
-					if (Enum.TryParse<MonoMacLinkerMode> (v, out mode))
-						PackagingSettings.LinkerMode = mode;
+					try {
+						PackagingSettings.LinkerMode = (MonoMacLinkerMode) Enum.Parse (typeof (MonoMacLinkerMode), v);
+					} catch {}
 				}},
 				{ "b|sign-bundle=", "Sign bundle with specified key.", v => {
 					PackagingSettings.SignBundle = v != null;
