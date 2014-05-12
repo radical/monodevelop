@@ -25,14 +25,14 @@
 		<LanguageBinding id="JavaScript" supportedextensions=".js" class="MonoDevelop.JavaScript.JavaScriptLanguageBinding" />
 	</Extension>
 	<Extension path="/MonoDevelop/Core/MimeTypes">
-		<MimeType id="application/javascript" _description="JavaScript Source Code" icon="md-script-file-icon" isText="true">
+		<MimeType id="application/javascript" _description="JavaScript source code" icon="md-script-file-icon" isText="true">
 			<File pattern="*.js" />
 		</MimeType>
 	</Extension>
 	<Extension path="/MonoDevelop/Ide/CodeFormatters">
 		<Formatter mimeType="application/javascript" class="MonoDevelop.JavaScript.Formatting.JavaScriptFormatter" />
 	</Extension>
-<!--	<Extension path="/MonoDevelop/ProjectModel/PolicySets/Mono">
+	<!--	<Extension path="/MonoDevelop/ProjectModel/PolicySets/Mono">
 		<Policies resource="MonoJSPolicy.xml" />
 	</Extension>-->
 	<Extension path="/MonoDevelop/Ide/CodeTemplates">
