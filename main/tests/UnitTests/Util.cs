@@ -50,6 +50,7 @@ namespace UnitTests
 					if (!Directory.Exists (Path.Combine (rootDir, "test-projects"))) {
 						rootDir = Path.Combine (Path.Combine (rootDir, ".."), "..");
 						rootDir = Path.GetFullPath (Path.Combine (rootDir, "tests"));
+						Console.WriteLine ($"*******### Setting TestsRootDir: {rootDir}");
 					}
 				}
 				return rootDir;
@@ -77,6 +78,7 @@ namespace UnitTests
 			string srcDir = Path.Combine (Path.Combine (TestsRootDir, "test-projects"), Combine (projectName));
 			string projDir = srcDir;
 			srcDir = Path.GetDirectoryName (srcDir);
+			Console.WriteLine ($"****#### GetSampleProject: srcDir: {srcDir}, projDir: {projDir}");
 
 			DeleteSubDirectory (srcDir, ".vs");
 			DeleteSubDirectory (srcDir, ".svn");
@@ -85,7 +87,9 @@ namespace UnitTests
 
 			string tmpDir = CreateTmpDir (Path.GetFileName (projDir));
 			CopyDir (srcDir, tmpDir);
-			return Path.Combine (tmpDir, Path.GetFileName (projDir));
+			var p = Path.Combine (tmpDir, Path.GetFileName (projDir));
+			Console.WriteLine ($"****#### GetSampleProject: returning {p}");
+			return p;
 		}
 
 		static void CreateDirectoryBuildMSBuildFiles ()
